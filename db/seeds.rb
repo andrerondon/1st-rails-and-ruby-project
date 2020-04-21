@@ -18,7 +18,10 @@ NUM_QUESTION.times do
         title: Faker::Hacker.say_something_smart,
         body: Faker::ChuckNorris.fact,
         created_at: created_at,
-        updated_at: updated_at
+        updated_at: created_at
     )
 end
 
+question = Question.all 
+
+puts Cowsay.say("Generated #{question.count} questions", :frogs)
