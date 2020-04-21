@@ -78,18 +78,21 @@ class Question < ApplicationRecord
     # Note: offset will skip first 10 records from the above query
     # SQL equivalent:
     # SELECT "questions".* FROM "questions" WHERE (view_count > 10) AND (title ILIKE 'a') ORDER BY id DESC LIMIT 10 OFFSET 10
+    # another example:
+    # Question.where(['view_count < ?', 10]).where(['body ILIKE ?', '%question%']).order(id: :DESC).limit(1).offset(1)
 
     # UPDATE RECORDS
     # once you've selected one or more records, you have ability to update them
     # Many setting attributes:
     # q = Question.find 10
     # q.title = "Some new title"
+    # q.save
     # q.view_count += 1
     # q.save
 
     # using .update_attributes or .update
     # q = Question.find 10
-    # q.update({ title: 'Updated Title', body: 'Updated body }) or
+    # q.update({ title: 'Updated Title', body: 'Updated body' }) or
     # q.update_attribute(:title, 'Updated Title') or
     # q.update_attributes(title: 'Updated Title', body: 'Updated body')
 
@@ -118,7 +121,7 @@ class Question < ApplicationRecord
 
     # CALLING RAW QUERIES
     # connection = ActiveRecord::Base.connection
-    # result = connection.execute('SELECT * FROM questions WEHRE id=1;')
+    # result = connection.execute('SELECT * FROM questions WHERE id=1;')
     # result.first 👈 because the result is an array of hashes
 
 end
