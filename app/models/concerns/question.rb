@@ -97,16 +97,28 @@ class Question < ApplicationRecord
     # using .destroy
     # q = Question.find 10
     # q.destroy
-
+    
     # using .delete
     # q = Question.find 10
     # q.delete
 
-    # using .delete skips executing callback methods after_adestroy and before_destroy 
+    # using .delete skips executing callback methods after_destroy and before_destroy 
     # and also skips deleting or nullifying associated records in the :dependant option
     # with associtations. Generally, avoid using ".delete" in favor of ".destroy". there are
     # only few cases when you want to use ".delete"
 
-    # Aggregate fundions
-    
+    # Aggregate functions
+    # .count
+    # Question.count 👈 counts the number of records in questions model
+    # SQL equivalent:
+    # SELECT COUNT(*) FROM "questions";
+
+    # .groud
+    # Question.select('avg(view_count)) as count').group('title')
+
+    # CALLING RAW QUERIES
+    # connection = ActiveRecord::Base.connection
+    # result = connection.execute('SELECT * FROM questions WEHRE id=1;')
+    # result.first 👈 because the result is an array of hashes
+
 end
