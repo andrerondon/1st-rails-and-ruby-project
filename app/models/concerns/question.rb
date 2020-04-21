@@ -8,6 +8,87 @@ class Question < ApplicationRecord
     # Rails will add att_accessors for all columns
     # of the table (i.e title, body, created_at, updated_at, ...)
 
+    # V A L I D A T I O N S
+    # Create validations by using the 'validates' method
+    # Th arguments are (in order):
+    # - A column name as a symbol 
+    # - Named arguments, corresponding to the validation rules
+
+    # To read more on validations, go to:
+    # https://guides.rubyonrails.org/active_record_validations.html
+
+    validates(:title, presence: true, uniqueness: true)
+    validates(
+        :body,
+        presence: { message: "must exist" },
+        length: { minimum: 10 }
+    )
+    validates(
+        :view_count,
+        numericality: { greater_than_or_equal_to: 0, allow_blank: true }
+    )
+
+    # Custom validation
+    # The method for custom validations is singular
+    # unlike the 'validates' method for regular validations
+    validate :no_monkey
+
+    # before_validation is a ifescycle callback
+    # method that allows to respond to events during 
+    # the life of a model instance (i.e being validated, 
+    # being created, being updated etc.)
+    # All lifecycle callback methods take a symbol 
+    # named after a method and calls that method 
+    # at the appropriate time.
+    before_validation(:set_default_view_count)
+
+    # For all available methods go to:
+    # https://guides.rubyonrails.org/v4.0/active_record_callbacks.html
+
+    def cool_view_count
+        view_count 
+    end
+
+    # Create a scope with a class method
+    # https://edgeguides.rubyonrails.org/active_record_querying.html#scopes
+
+    # def self.recent
+    #     order(created_at: :desc).limit(10)
+    # end
+
+    # Scopes are such a commonly used feature, that
+    # there's another way to create them quicker. It 
+    # takes a name and a lambda as a callback
+    scope(:recent, -> { order(created_at: :desc).limit(10)})
+
+    # def self.search(query)
+    #     where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%")
+    # end
+
+    # Equivalent to:
+    scope(:search, -> (query){ where("title ILIKE ? OR body ILIKE ?", "%#{query}%", "%#{query}%") })
+ 
+
+    private 
+    
+    def no_monkey
+        # &. is the safe navigation operator. It's used
+        # like the . operator to call methods on an object.
+        # If the method doesn't exist for the object, 'nil'
+        # will be returned instead of getting an error
+        if body&.downcase&.include?("monkey")
+            # To make a record invalid. You must add a 
+            # validation error using the 'errors' 'add' method
+            # It's arguments (in order):
+            # - A symbol for the invalid column
+            # - An error message as a string
+            self.errors.add(:body, "Must not have monkeys")
+        end
+    end
+
+    def set_default_view_count
+        self.view_count ||= 0
+    end
     
     
     
@@ -117,11 +198,26 @@ class Question < ApplicationRecord
     # SELECT COUNT(*) FROM "questions";
 
     # .groud
-    # Question.select('avg(view_count)) as count').group('title')
+    Question.select('avg(view_count) as count').group('view_count')
+
+
+    # 5 questions with same title => it will add their view_counts / 5 and it will return it as count = result
 
     # CALLING RAW QUERIES
     # connection = ActiveRecord::Base.connection
     # result = connection.execute('SELECT * FROM questions WHERE id=1;')
     # result.first 👈 because the result is an array of hashes
 
+    # Exercise: Question Contains
+    # Build a query that fetches the first 10 questions
+    # that contain "el" in their titles ordered by "created_at"
+    # in a descending order
+    # solution:
+    # Question.where(['title LIKE ?', '%el%']).limit(10)
+
+    # Exercise: First 10 Questions
+    # Build a query that fetches the first 10 most viewed questions
+    # that were created in the last three days
+    # Solution:
+    # Question.where('created_at >= ?', 3.days.ago).order(view_count: :DESC).limit(10)
 end
