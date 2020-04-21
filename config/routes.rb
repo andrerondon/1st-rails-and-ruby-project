@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   # GET "/contact_us"
   get("/contact_us", to: "welcome#contact_us")
 
+  # POST "/process_contact"
+  post("/process_contact", to: "welcome#process_contact")
 end
