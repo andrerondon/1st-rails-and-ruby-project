@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>AwesomeAnswers</title>
+    <title>AwesomeAnswersMarch202</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
 
@@ -10,6 +10,8 @@
   </head>
 
   <body>
+    <%# render method will be replaced by the template at the provided path %>
+    <%= render 'shared/navbar' %>
     <%= yield %>
   </body>
 </html>
