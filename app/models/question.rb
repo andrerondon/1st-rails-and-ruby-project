@@ -45,9 +45,9 @@ class Question < ApplicationRecord
     # For all available methods go to:
     # https://guides.rubyonrails.org/v4.0/active_record_callbacks.html
 
-    def cool_view_count
-        view_count 
-    end
+    # def cool_view_count
+    #     view_count 
+    # end
 
     # Create a scope with a class method
     # https://edgeguides.rubyonrails.org/active_record_querying.html#scopes
@@ -87,7 +87,7 @@ class Question < ApplicationRecord
     end
 
     def set_default_view_count
-        self.view_count ||= 0
+        self.view_count ||= 10
     end
     
     
@@ -198,7 +198,7 @@ class Question < ApplicationRecord
     # SELECT COUNT(*) FROM "questions";
 
     # .groud
-    Question.select('avg(view_count) as count').group('view_count')
+    # Question.select('avg(view_count) as count').group('view_count')
 
 
     # 5 questions with same title => it will add their view_counts / 5 and it will return it as count = result

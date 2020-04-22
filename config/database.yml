@@ -23,13 +23,13 @@ default: &default
 
 development:
   <<: *default
-  database: awesome_answers_development
+  database: awesome_answers_march_202_development
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
   # When left blank, postgres will use the default role. This is
   # the same name as the operating system user that initialized the database.
-  #username: awesome_answers
+  #username: awesome_answers_march_202
 
   # The password associated with the postgres role (username).
   #password:
@@ -57,7 +57,7 @@ development:
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: awesome_answers_test
+  database: awesome_answers_march_202_test
 
 # As with config/credentials.yml, you never want to store sensitive information,
 # like your database password, in your source code. If your source code is
@@ -80,6 +80,6 @@ test:
 #
 production:
   <<: *default
-  database: awesome_answers_production
-  username: awesome_answers
-  password: <%= ENV['AWESOME_ANSWERS_DATABASE_PASSWORD'] %>
+  database: awesome_answers_march_202_production
+  username: awesome_answers_march_202
+  password: <%= ENV['AWESOME_ANSWERS_MARCH_202_DATABASE_PASSWORD'] %>
