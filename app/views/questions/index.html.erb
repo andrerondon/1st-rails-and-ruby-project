@@ -1,3 +1,4 @@
+  
 <h1>Questions Index Page</h1>
 
 <div class='row'>
@@ -11,6 +12,17 @@
         <li class='list-group-item'>
           <p><%= question.id %> <%= question.title %></p>
         </li>
+      <% end %>
+    <% end %>
+
+    <%# link_to just creates a `a tag` with the correct href. the below is equivalent to the above code %>
+    <% if false %>
+      <% @questions.each do |question| %>
+        <a href="/questions/<%= question.id %>">
+          <li class='list-group-item'>
+            <p><%= question.id %> <%= question.title%></p>
+          </li>
+        </a>
       <% end %>
     <% end %>
   </div>
