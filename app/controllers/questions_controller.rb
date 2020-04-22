@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
 
   # show all of our questions
   def index
-    @questions = Question.all
+    @questions = Question.all.order('updated_at DESC')
   end
 
   def new
@@ -18,12 +18,34 @@ class QuestionsController < ApplicationController
     if @question.save
       redirect_to questions_path
     else
-      redirect_to new_question_path
+      render :new
     end
   end
 
   def show
     id = params[:id]
-    @question = Question.find(:id)
+    @question = Question.find(id)
+  end
+
+  def destroy
+    id = params[:id]
+    @question = Question.find(id)
+    @question.destroy
+    redirect_to questions_path
+  end
+
+  def edit
+    id = params[:id]
+    @question = Question.find(id)
+  end
+
+  def update
+    id = params[:id]
+    @question = Question.find(id)
+    if @question.update(params.require(:question).permit(:title, :body))
+      redirect_to question_path(@question)
+    else
+      render :edit
+    end
   end
 end
