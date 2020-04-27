@@ -12,6 +12,12 @@ Rails.application.routes.draw do
   # get("/questions/:id/edit", to: "questions#edit", as: :edit_question)
   # patch("/questions/:id", to: "questions#update")
 
+  resource :session, only: [:new, :create]
+  # notice resource here is singular. This is a different method that is like resources.
+  # this method is used for a resource which you will only create one of.
+  # usually this resource will not need a dynamic id
+  # https://api.rubyonrails.org/classes/ActionDispatch/Routing/Mapper/Resources.html#method-i-resource
+
   # resources :questions #build the CRUD RESTful routes. (all of the above routes for questions)
   # 'resources' method will generate all CRUD routes
   # following RESTful conventions for a resource 
@@ -20,13 +26,13 @@ Rails.application.routes.draw do
   resources :questions do 
     # Routes written inside of a block passed to
     # a resources method will be pre-fixed by 
-    # a path corresponding to the passed in symbol. re
+    # a path corresponding to the passed in symbol. 
     # In this case, all nested routes will be pre-fixed
     # with '/questions/:question_id'
     resources :answers, only: [:create, :destroy]
     # equivalent to: 
     # resources :answers, except: [:show, :index, :new, :edit, :update]
-    # question_answerss_path(<question-id>)
+    # question_answers_path(<question-id>)
     # question_answer_url(<question-id>)
     # question_answers_path(@quation)
   end
