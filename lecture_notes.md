@@ -31,3 +31,14 @@ RESTful Web Service is a specific way to stucture your HTTP VERBS & PATHS
 For example to get to the questions index page you would use: GET "/questions"
 to get the show page you would use: GET "/questions/:id"
 to createa question you would use: POST "/questions"
+
+
+Todays Lecture:
+
+Rails Authentication
+
+1) Create Users
+
+2) Implent Login/Logout (Sessions)
+
+3) User Relations

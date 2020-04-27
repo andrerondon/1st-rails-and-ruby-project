@@ -20,7 +20,7 @@ Rails.application.routes.draw do
   resources :questions do 
     # Routes written inside of a block passed to
     # a resources method will be pre-fixed by 
-    # a path corresponding to the passed in symbol. 
+    # a path corresponding to the passed in symbol. re
     # In this case, all nested routes will be pre-fixed
     # with '/questions/:question_id'
     resources :answers, only: [:create, :destroy]
