@@ -16,7 +16,15 @@ class SessionsController < ApplicationController
       redirect_to questions_path
     else
       flash[:warning] = "Couldn't log In"
+      flash[:secondary] = "yikes"
+      flash[:dasfdsfadsfsd] = 'adsfads'
       render :new
     end
   end
+
+  def destroy
+    session[:user_id] = nil
+    redirect_to questions_path
+  end
+
 end
