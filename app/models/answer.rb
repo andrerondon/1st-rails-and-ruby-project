@@ -7,6 +7,7 @@ class Answer < ApplicationRecord
   # It can be disabled by passing option
   # 'optional: true' to the belongs_to method
   belongs_to :question
+  belongs_to :user
 
   # The following instance method are added to the 
   # Answer model with the line belongs_to :question.
@@ -20,4 +21,6 @@ class Answer < ApplicationRecord
 
 
   validates :body, presence: true
+  # Note if you want to add your own validation message you can type your validates like below:
+  # validates :body, presence: { message: "My own validation message" }
 end

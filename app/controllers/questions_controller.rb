@@ -6,6 +6,7 @@ class QuestionsController < ApplicationController
   # 2) options hash
   before_action :authenticate_user!, except: [:index, :show] 
   # will call authenticate_user! before every method except :index and :show
+  before_action :authorize!, only: [:edit, :update, :destroy]
 
   # show all of our questions
   def index
@@ -19,6 +20,7 @@ class QuestionsController < ApplicationController
   def create
     # params.require(:question).permit(:title, :body) => tells rails to allow an object on the params that is called question. And on that question object allow the keys :title and :body
     @question = Question.new(params.require(:question).permit(:title, :body))
+    @question.user = current_user
     #tell active record to goahead and run the INSERT SQL query against our db. Returns true if it saves, returns false if it doesn't save
     if @question.save
       redirect_to questions_path
@@ -56,5 +58,9 @@ class QuestionsController < ApplicationController
     else
       render :edit
     end
+  end
+
+  def authorize! 
+    redirect_to root_path, alert: 'Not Authorized' unless can?(:crud, Question)
   end
 end
